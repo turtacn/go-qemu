@@ -15,6 +15,12 @@ type Rule interface {
 	Conflicts() []string
 }
 
+var defaultRules []Rule
+
+func RegisterDefaultRules(rules []Rule) {
+	defaultRules = rules
+}
+
 type CmdlineBuilder struct {
 	version    version.QEMUVersion
 	arch       feature.Arch
@@ -34,6 +40,10 @@ func NewBuilder(opts ...Option) (*CmdlineBuilder, error) {
 
 	if b.featureReg == nil {
 		b.featureReg = feature.New(b.version, b.arch)
+	}
+
+	if len(b.rules) == 0 && len(defaultRules) > 0 {
+		b.rules = defaultRules
 	}
 
 	return b, nil

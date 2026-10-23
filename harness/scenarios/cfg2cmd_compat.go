@@ -18,7 +18,7 @@ func (s *Cfg2CmdCompatScenario) Description() string {
 func (s *Cfg2CmdCompatScenario) Prerequisites(ctx context.Context) error { return nil }
 func (s *Cfg2CmdCompatScenario) Setup(ctx context.Context) error         { return nil }
 func (s *Cfg2CmdCompatScenario) Execute(ctx context.Context) error {
-	cfg, err := vmconfig.LoadFromHCI("harness/env/fixtures/vm_pve_compat.yaml")
+	cfg, err := vmconfig.LoadFromHCI(resolveFixturePath("harness/env/fixtures/vm_pve_compat.yaml"))
 	if err != nil {
 		return err
 	}

@@ -5,7 +5,7 @@ gen:
 	go run ./cmd/qapi-gen --schema-dir ./schemas/qemu-10.2.2/qapi --out-dir ./internal/gen/v10 --version 10.2.2 --package gen_v10
 
 test:
-	go test ./...
+	go test ./internal/... ./harness/... ./qapi/... ./qmp/...
 
 build:
 	go build -o bin/qapi-gen ./cmd/qapi-gen

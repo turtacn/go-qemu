@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/turtacn/go-qemu/internal/cmdline"
+	_ "github.com/turtacn/go-qemu/internal/cmdline/rules"
 	"github.com/turtacn/go-qemu/internal/dryrun"
 	"github.com/turtacn/go-qemu/internal/feature"
 	"github.com/turtacn/go-qemu/internal/migrate"

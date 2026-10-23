@@ -14,7 +14,13 @@ type LocalUpgradeScenario struct {
 }
 
 func NewLocalUpgradeScenario(vmid int) *LocalUpgradeScenario {
-	return &LocalUpgradeScenario{vmid: vmid}
+	return &LocalUpgradeScenario{
+		vmid: vmid,
+		upgrader: upgrade.NewLocalUpgrader(upgrade.LocalUpgradeConfig{
+			VMID:         vmid,
+			VMConfigPath: resolveFixturePath("harness/env/fixtures/vm_basic_x86.yaml"),
+		}),
+	}
 }
 
 func (s *LocalUpgradeScenario) Name() string { return "local-upgrade-5.0-to-10.2.2" }
@@ -28,7 +34,7 @@ func (s *LocalUpgradeScenario) Setup(ctx context.Context) error {
 	s.vmid = 100
 	s.upgrader = upgrade.NewLocalUpgrader(upgrade.LocalUpgradeConfig{
 		VMID:         s.vmid,
-		VMConfigPath: "harness/env/fixtures/vm_basic_x86.yaml",
+		VMConfigPath: resolveFixturePath("harness/env/fixtures/vm_basic_x86.yaml"),
 	})
 	return nil
 }
