@@ -1,0 +1,5 @@
+[
+  { "command": "query-cpus-fast", "returns": "any" },
+  { "command": "query-machines", "returns": "any" },
+  { "command": "object-add", "data": "any" }
+]

@@ -7,7 +7,7 @@ import (
 
 	"github.com/alecthomas/repr"
 
-	"github.com/digitalocean/go-qemu/qapi-schema/internal/lex"
+	"github.com/turtacn/go-qemu/qapi-schema/internal/lex"
 )
 
 func main() {

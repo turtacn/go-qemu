@@ -1,0 +1,15 @@
+id: 100
+name: vm-basic-x86
+memory:
+  sizemb: 2048
+cpu:
+  cores: 2
+  sockets: 1
+  model: host
+machine:
+  type: pc-i440fx
+disks:
+  - bus: scsi
+    index: 0
+    path: /dev/sda
+    format: raw

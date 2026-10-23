@@ -1,0 +1,14 @@
+id: 101
+name: vm-pve-compat
+memory:
+  sizemb: 4096
+cpu:
+  cores: 4
+  sockets: 1
+machine:
+  type: pc-i440fx
+disks:
+  - bus: virtio
+    index: 0
+    path: /dev/pve/vm-101-disk-0
+    format: raw

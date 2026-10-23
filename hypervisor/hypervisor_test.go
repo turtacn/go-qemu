@@ -19,7 +19,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/digitalocean/go-qemu/qmp"
+	"github.com/turtacn/go-qemu/qmp"
 )
 
 func TestHypervisorDomains(t *testing.T) {

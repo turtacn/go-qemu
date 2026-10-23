@@ -1,0 +1,12 @@
+[
+  { "enum": "MigrationCapability",
+    "data": [ "xbzrle", "rdma-pin-all", "auto-converge", "zero-blocks", "compress", "events", "postcopy-ram", "x-colo", "release-ram", "block", "return-path", "pause-before-switchover", "late-block-activate", "multifd", "dirty-bitmaps", "postcopy-preempt" ] },
+  { "struct": "MigrationCapabilityStatus",
+    "data": { "capability": "MigrationCapability", "state": "bool" } },
+  { "command": "migrate", "data": { "uri": "str", "*blk": "bool", "*inc": "bool", "*detach": "bool", "*resume": "bool" } },
+  { "command": "query-migrate-capabilities", "returns": ["MigrationCapabilityStatus"] },
+  { "command": "migrate-set-capabilities", "data": { "capabilities": ["MigrationCapabilityStatus"] } },
+  { "command": "query-migrate", "returns": "any" },
+  { "command": "migrate-set-parameters", "data": { "*compress-level": "int" } },
+  { "command": "calc-dirty-rate", "data": { "calc-time": "int" } }
+]

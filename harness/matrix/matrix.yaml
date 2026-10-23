@@ -1,0 +1,26 @@
+matrix:
+  qemu_versions:
+    - "5.0.0"
+    - "10.2.2"
+  architectures:
+    - "x86_64"
+  scenarios:
+    - name: "local-upgrade-5.0-to-10.2.2"
+      required: true
+      qemu_pairs:
+        - from: "5.0.0"
+          to: "10.2.2"
+    - name: "cmdline-diff-5.0-vs-10.2.2"
+      required: true
+      versions: ["5.0.0", "10.2.2"]
+    - name: "feature-gates-verification"
+      required: true
+      versions: ["5.0.0", "10.2.2"]
+    - name: "migration-capability-negotiation"
+      required: true
+      qemu_pairs:
+        - from: "5.0.0"
+          to: "10.2.2"
+    - name: "dry-run-all-layers"
+      required: true
+      versions: ["5.0.0", "10.2.2"]

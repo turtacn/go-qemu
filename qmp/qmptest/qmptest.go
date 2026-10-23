@@ -20,7 +20,7 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/digitalocean/go-qemu/qmp"
+	"github.com/turtacn/go-qemu/qmp"
 )
 
 // A RunFunc is a function invoked to process a qmp.Command.  Any data

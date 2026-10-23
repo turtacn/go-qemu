@@ -18,7 +18,7 @@ import (
 	"net"
 
 	"github.com/digitalocean/go-libvirt"
-	"github.com/digitalocean/go-qemu/qmp"
+	"github.com/turtacn/go-qemu/qmp"
 )
 
 var _ Driver = &RPCDriver{}

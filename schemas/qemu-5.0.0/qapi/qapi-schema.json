@@ -1,0 +1,7 @@
+[
+  { "include": "common.json" },
+  { "include": "block.json" },
+  { "include": "migration.json" },
+  { "include": "machine.json" },
+  { "include": "net.json" }
+]

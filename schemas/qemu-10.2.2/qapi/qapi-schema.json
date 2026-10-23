@@ -1,0 +1,9 @@
+[
+  { "include": "common.json" },
+  { "include": "block-core.json" },
+  { "include": "migration.json" },
+  { "include": "machine.json" },
+  { "include": "net.json" },
+  { "include": "cxl.json" },
+  { "include": "confidential-guest-support.json" }
+]

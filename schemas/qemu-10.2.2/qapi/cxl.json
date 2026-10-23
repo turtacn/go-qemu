@@ -1,0 +1,3 @@
+[
+  { "command": "cxl-inject-general-media-event", "data": { "path": "str" } }
+]

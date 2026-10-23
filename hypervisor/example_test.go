@@ -18,9 +18,9 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/digitalocean/go-qemu/hypervisor"
-	"github.com/digitalocean/go-qemu/qmp"
-	"github.com/digitalocean/go-qemu/qmp/qmptest"
+	"github.com/turtacn/go-qemu/hypervisor"
+	"github.com/turtacn/go-qemu/qmp"
+	"github.com/turtacn/go-qemu/qmp/qmptest"
 )
 
 func ExampleNew() {

@@ -3,8 +3,8 @@ package qapischema
 import (
 	"strings"
 
-	"github.com/digitalocean/go-qemu/qapi-schema/internal/parse"
-	"github.com/digitalocean/go-qemu/qapi-schema/internal/token"
+	"github.com/turtacn/go-qemu/qapi-schema/internal/parse"
+	"github.com/turtacn/go-qemu/qapi-schema/internal/token"
 )
 
 var schemaParser = parse.Map(

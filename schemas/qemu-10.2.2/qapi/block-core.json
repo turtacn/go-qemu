@@ -1,0 +1,4 @@
+[
+  { "command": "blockdev-add", "data": "any" },
+  { "command": "query-block", "returns": "any" }
+]

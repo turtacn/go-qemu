@@ -7,7 +7,7 @@ import (
 
 	"github.com/alecthomas/repr"
 
-	qapischema "github.com/digitalocean/go-qemu/qapi-schema"
+	qapischema "github.com/turtacn/go-qemu/qapi-schema"
 )
 
 func main() {

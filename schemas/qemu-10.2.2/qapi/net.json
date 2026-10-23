@@ -1,0 +1,4 @@
+[
+  { "command": "netdev_add", "data": "any" },
+  { "command": "netdev_del", "data": { "id": "str" } }
+]

@@ -1,0 +1,3 @@
+[
+  { "command": "query-sev", "returns": "any" }
+]

@@ -14,7 +14,7 @@
 
 package raw
 
-import "github.com/digitalocean/go-qemu/qmp"
+import "github.com/turtacn/go-qemu/qmp"
 
 // Monitor exposes the raw QMP command set.
 type Monitor struct {

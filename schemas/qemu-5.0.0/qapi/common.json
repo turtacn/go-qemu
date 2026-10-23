@@ -1,0 +1,8 @@
+[
+  { "command": "query-version", "returns": "VersionInfo" },
+  { "command": "query-qmp-schema", "returns": "any" },
+  { "command": "stop" },
+  { "command": "cont" },
+  { "command": "system_reset" },
+  { "command": "quit" }
+]

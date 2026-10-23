@@ -6,8 +6,8 @@ import (
 
 	"github.com/alecthomas/repr"
 
-	"github.com/digitalocean/go-qemu/qapi-schema/internal/parse"
-	"github.com/digitalocean/go-qemu/qapi-schema/internal/token"
+	"github.com/turtacn/go-qemu/qapi-schema/internal/parse"
+	"github.com/turtacn/go-qemu/qapi-schema/internal/token"
 )
 
 func TestTrueParser(t *testing.T) {

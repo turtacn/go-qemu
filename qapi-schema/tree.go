@@ -3,8 +3,8 @@ package qapischema
 import (
 	"errors"
 
-	"github.com/digitalocean/go-qemu/qapi-schema/internal/lex"
-	"github.com/digitalocean/go-qemu/qapi-schema/internal/parse"
+	"github.com/turtacn/go-qemu/qapi-schema/internal/lex"
+	"github.com/turtacn/go-qemu/qapi-schema/internal/parse"
 )
 
 // Parse parses a QAPI input document and returns its parse tree.

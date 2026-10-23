@@ -1,6 +1,6 @@
-module github.com/digitalocean/go-qemu
+module github.com/turtacn/go-qemu
 
-go 1.18
+go 1.22.0
 
 require (
 	github.com/alecthomas/repr v0.4.0
@@ -8,3 +8,5 @@ require (
 	github.com/fatih/camelcase v1.0.0
 	golang.org/x/sys v0.30.0
 )
+
+require gopkg.in/yaml.v3 v3.0.1 // indirect
