@@ -26,6 +26,6 @@ const (
 
 // MigrationCapabilityStatus corresponds to QAPI struct MigrationCapabilityStatus
 type MigrationCapabilityStatus struct {
-	State bool `json:"state,omitempty"`
 	Capability MigrationCapability `json:"capability,omitempty"`
+	State bool `json:"state,omitempty"`
 }

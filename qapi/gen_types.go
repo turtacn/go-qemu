@@ -2,6 +2,7 @@ package qapi
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 )
 
@@ -12,7 +13,14 @@ func (g *Generator) genTypes() error {
 	sb.WriteString(fmt.Sprintf("package %s\n\n", g.Package))
 
 	// Generate Enums
-	for _, enumDef := range g.Schema.Enums {
+	enumNames := make([]string, 0, len(g.Schema.Enums))
+	for name := range g.Schema.Enums {
+		enumNames = append(enumNames, name)
+	}
+	sort.Strings(enumNames)
+
+	for _, name := range enumNames {
+		enumDef := g.Schema.Enums[name]
 		enumTypeName := toPascalCase(enumDef.Name)
 		sb.WriteString(fmt.Sprintf("// %s corresponds to QAPI enum %s\n", enumTypeName, enumDef.Name))
 		sb.WriteString(fmt.Sprintf("type %s string\n\n", enumTypeName))
@@ -26,11 +34,26 @@ func (g *Generator) genTypes() error {
 	}
 
 	// Generate Structs
-	for _, structDef := range g.Schema.Structs {
+	structNames := make([]string, 0, len(g.Schema.Structs))
+	for name := range g.Schema.Structs {
+		structNames = append(structNames, name)
+	}
+	sort.Strings(structNames)
+
+	for _, name := range structNames {
+		structDef := g.Schema.Structs[name]
 		structTypeName := toPascalCase(structDef.Name)
 		sb.WriteString(fmt.Sprintf("// %s corresponds to QAPI struct %s\n", structTypeName, structDef.Name))
 		sb.WriteString(fmt.Sprintf("type %s struct {\n", structTypeName))
-		for fieldName, fieldDef := range structDef.Data {
+
+		fieldNames := make([]string, 0, len(structDef.Data))
+		for fieldName := range structDef.Data {
+			fieldNames = append(fieldNames, fieldName)
+		}
+		sort.Strings(fieldNames)
+
+		for _, fieldName := range fieldNames {
+			fieldDef := structDef.Data[fieldName]
 			goFieldName := toPascalCase(strings.TrimPrefix(fieldName, "*"))
 			goType := toGoType(fieldDef.Type)
 			jsonTag := strings.TrimPrefix(fieldName, "*")

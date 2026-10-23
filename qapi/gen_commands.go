@@ -2,6 +2,7 @@ package qapi
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 )
 
@@ -13,7 +14,14 @@ func (g *Generator) genCommands() error {
 
 	sb.WriteString("// Commands map lists all available command names in this QEMU version.\n")
 	sb.WriteString("var Commands = []string{\n")
+
+	cmds := make([]string, 0, len(g.Schema.Commands))
 	for name := range g.Schema.Commands {
+		cmds = append(cmds, name)
+	}
+	sort.Strings(cmds)
+
+	for _, name := range cmds {
 		sb.WriteString(fmt.Sprintf("\t%q,\n", name))
 	}
 	sb.WriteString("}\n")
