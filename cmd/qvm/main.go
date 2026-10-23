@@ -9,6 +9,7 @@ import (
 
 	"github.com/turtacn/go-qemu/harness"
 	"github.com/turtacn/go-qemu/internal/cmdline"
+	"github.com/turtacn/go-qemu/internal/cmdline/rules"
 	"github.com/turtacn/go-qemu/internal/dryrun"
 	"github.com/turtacn/go-qemu/internal/upgrade"
 	"github.com/turtacn/go-qemu/internal/version"
@@ -50,6 +51,12 @@ func main() {
 		if err != nil {
 			log.Fatalf("Failed to create builder: %v", err)
 		}
+		reg := rules.DefaultRegistry()
+		var ruleSlice []cmdline.Rule
+		for _, r := range reg.Rules() {
+			ruleSlice = append(ruleSlice, r)
+		}
+		builder.SetRules(ruleSlice)
 
 		args, report, err := builder.Build(vmCfg)
 		if err != nil {
@@ -65,6 +72,78 @@ func main() {
 			for _, w := range report.Warnings {
 				fmt.Printf("  - %s\n", w)
 			}
+		}
+
+	case "diff":
+		fs := flag.NewFlagSet("diff", flag.ExitOnError)
+		cfgPath := fs.String("config", "", "Path to VM configuration YAML")
+		fromVerStr := fs.String("from", "5.0.0", "Source QEMU version")
+		toVerStr := fs.String("to", "10.2.2", "Target QEMU version")
+		fs.Parse(os.Args[2:])
+
+		if *cfgPath == "" {
+			fs.Usage()
+			os.Exit(1)
+		}
+
+		vmCfg, err := vmconfig.LoadFromHCI(*cfgPath)
+		if err != nil {
+			log.Fatalf("Failed to load VM config: %v", err)
+		}
+
+		fromVer, _ := version.Parse(*fromVerStr)
+		toVer, _ := version.Parse(*toVerStr)
+
+		reg := rules.DefaultRegistry()
+		var ruleSlice []cmdline.Rule
+		for _, r := range reg.Rules() {
+			ruleSlice = append(ruleSlice, r)
+		}
+
+		bFrom, _ := cmdline.NewBuilder(cmdline.WithQEMUVersion(fromVer))
+		bFrom.SetRules(ruleSlice)
+		_, reportFrom, _ := bFrom.Build(vmCfg)
+
+		bTo, _ := cmdline.NewBuilder(cmdline.WithQEMUVersion(toVer))
+		bTo.SetRules(ruleSlice)
+		_, reportTo, _ := bTo.Build(vmCfg)
+
+		diff := reportTo.DiffFrom(fromVer, reportFrom)
+		diff.Print(os.Stdout)
+
+	case "cfg2cmd":
+		fs := flag.NewFlagSet("cfg2cmd", flag.ExitOnError)
+		pvePath := fs.String("pve-config", "", "Path to Proxmox PVE format configuration")
+		qemuVer := fs.String("version", "5.0.0", "Target QEMU version")
+		fs.Parse(os.Args[2:])
+
+		if *pvePath == "" {
+			fs.Usage()
+			os.Exit(1)
+		}
+
+		vmCfg, err := vmconfig.LoadFromPVE(*pvePath)
+		if err != nil {
+			log.Fatalf("Failed to load PVE config: %v", err)
+		}
+
+		parsedVer, _ := version.Parse(*qemuVer)
+		builder, _ := cmdline.NewBuilder(cmdline.WithQEMUVersion(parsedVer))
+		reg := rules.DefaultRegistry()
+		var ruleSlice []cmdline.Rule
+		for _, r := range reg.Rules() {
+			ruleSlice = append(ruleSlice, r)
+		}
+		builder.SetRules(ruleSlice)
+
+		args, _, err := builder.Build(vmCfg)
+		if err != nil {
+			log.Fatalf("cfg2cmd conversion failed: %v", err)
+		}
+
+		fmt.Printf("Converted PVE Config to QEMU %s commandline:\n", parsedVer)
+		for _, a := range args {
+			fmt.Printf("  %s\n", a)
 		}
 
 	case "dry-run":
@@ -84,6 +163,13 @@ func main() {
 		}
 
 		builder, _ := cmdline.NewBuilder(cmdline.WithQEMUVersion(version.V(5, 0, 0)))
+		reg := rules.DefaultRegistry()
+		var ruleSlice []cmdline.Rule
+		for _, r := range reg.Rules() {
+			ruleSlice = append(ruleSlice, r)
+		}
+		builder.SetRules(ruleSlice)
+
 		args, _, err := builder.Build(vmCfg)
 		if err != nil {
 			log.Fatalf("Failed to build args for dry-run: %v", err)
@@ -167,6 +253,8 @@ func printUsage() {
 	fmt.Println("Usage: qvm <command> [args]")
 	fmt.Println("Commands:")
 	fmt.Println("  build-cmdline --config <yaml> [--version <ver>]")
+	fmt.Println("  diff          --config <yaml> [--from <ver1>] [--to <ver2>]")
+	fmt.Println("  cfg2cmd       --pve-config <path> [--version <ver>]")
 	fmt.Println("  dry-run       --config <yaml> [--qemu-bin <path>]")
 	fmt.Println("  upgrade       --config <yaml> [--vmid <id>]")
 	fmt.Println("  harness       [--report <path>]")
